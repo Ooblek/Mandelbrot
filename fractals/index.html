@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src = "./script.js"></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.3.0/math.min.js></script>
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+
+        var myCanvas = document.createElement("canvas");
+            myCanvas.width=600;
+            myCanvas.height=600;
+            document.body.appendChild(myCanvas);
+            var ctx = myCanvas.getContext("2d");
+
+        
+            
+        
+        var checkMandel = (x,y) => {
+            //check if its in the mandelbrot set
+
+            var real = x;
+            var imaginary = y;
+            var maxIterations = 400;
+            var iterations = 0;
+
+            for(var i = 0; i<maxIterations; i++){
+                var tReal = real*real - imaginary*imaginary +x;
+                var tImaginary = 2*real*imaginary +y;
+
+                real = tReal;
+                imaginary = tImaginary;
+                iterations++;
+
+                if(real*imaginary > 5){
+                    return ((iterations/maxIterations)*100);
+                 }
+            }
+            return 0;
+
+           
+           
+        }
+
+        // var mag = 2000;
+        // var panX = 0.8;
+        // var panY = 0.47;
+        var mag = 200;
+        var panX = 1.8;
+        var panY = 1.5;
+
+        for(var x = 0; x< myCanvas.width;x++){
+            for(y = 0; y<myCanvas.height; y++){
+                var check = checkMandel(x/mag -panX, y/mag -panY);
+
+                if (check == 0 ){
+                    ctx.fillStyle = '#000'
+                    ctx.fillRect(x,y,1,1);
+                }
+                else{
+                    ctx.fillStyle = 'hsl(30, 100%,' + check + '%)';
+                    ctx.fillRect(x,y, 1,1); 
+         
+                }
+
+
+
+            }
+        };
+
+
+    </script>
+</body>
+</html>
